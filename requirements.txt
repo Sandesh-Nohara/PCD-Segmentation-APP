@@ -3,9 +3,9 @@ Flask==2.2.5
 matplotlib==3.6.0
 matplotlib-inline==0.1.6
 numpy     
-opencv-python==4.5.4.60
-pandas==1.5.3
-scikit-learn==1.2.2
+opencv-python
+pandas
+scikit-learn
 torch_geometric==2.4.0
 torch==2.1.0
 torchaudio==2.1.0
