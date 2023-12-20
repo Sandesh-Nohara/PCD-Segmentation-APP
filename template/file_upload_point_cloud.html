@@ -1,0 +1,124 @@
+
+<html>
+<head>
+  <link rel="stylesheet" href="static/file_upload_point_cloud.css">
+</head>
+
+
+ <style>
+body {
+  background-image: url('static/images/img3.jpeg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+</style> 
+
+<div> 
+    <img src="static/images/nohara_logo3.jpg", class= 'clsFirstImg'> 
+</div> 
+
+<div class="centered">Point Cloud Segmentation </div>
+<div class="centered1">点群データからの面積算出サービス </div>
+<!-- <div class="centered2">Please select the point cloud data for which you want to calculate the area</div>
+<div class="centered3">面積算出したい点群データを選択してください</div>
+<div class="centered4">Please click on upload once you select point cloud file</div>
+<div class="centered5">点群データを選択後、アップロードボタンをクリックしてください</div> -->
+
+
+<!-- <center>
+<div  class="upload">
+<form action = "/visualization" id="upload_form" enctype="multipart/form-data" method="post">
+  
+  <input type="file" name="file" id="file"><br>
+  <input type="submit" value="Upload" ><br>
+  
+  <p class="text-center leading-relaxed">
+                            <b>Supported 3D files</b><br>
+                            PLY, XYZ, TXT<br>
+  </p>
+</form>
+</div>
+</center> -->
+
+
+<head>
+  <title>Point Cloud Visualization</title>
+  <style>
+      /* Loading animation */
+      .loader {
+          position: absolute;
+          top: 31%;
+          left: 47%;
+          border: 8px solid #f3f3f3;
+          border-top: 8px solid #34db85;
+          border-radius: 50%;
+          width: 60px;
+          height: 60px;
+          animation: spin 2s linear infinite;
+          margin: 0 auto;
+      }
+      
+      /* Progress percentage text */
+      .progress {
+          text-align: center;
+          font-size: 18px;
+          margin-top: 20px;
+      }
+      
+      /* Animation keyframes */
+      @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+      }
+  </style>
+</head>
+<body>
+  
+  <!-- Form to upload point cloud file -->
+  <!-- <form action="{{ url_for('visualization') }}" method="POST" enctype="multipart/form-data">
+      <input type="file" name="file">
+      <input type="submit" value="Upload">
+  </form> -->
+
+  <center>
+  <div  class="upload">
+    <p>1.Please select the point cloud for which you want to calculate the area <br>
+      面積算出したい点群データを選択してください <br>
+      <br>
+      <br>
+      2.Please click on upload once you select point cloud file <br>
+      点群データを選択後アップロードボタンをクリックしてください <br>
+      <br>
+      <br>
+      3.Please wait for a while, it will take some time to finish <br>
+      完了するまでに時間がかかるため、しばらくお待ちください
+    </p><br>
+  <form action = "/visualization" id="upload_form" enctype="multipart/form-data" method="post">
+    
+    <input type="file" name="file" id="file"><br>
+    <input type="submit" value="Upload" ><br>
+    
+    <p class="text-center leading-relaxed">
+                              <b>Supported 3D files</b><br>
+                              .ply, .xyz, .txt<br>
+    </p>
+    
+  </form>
+  </div>
+  </center>
+  
+
+</script>
+</body>
+
+
+
+
+
+</html>
+
+
+
+
+

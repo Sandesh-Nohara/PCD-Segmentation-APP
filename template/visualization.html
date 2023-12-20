@@ -1,0 +1,175 @@
+
+<html>  
+<head>
+  <link rel="stylesheet" href="static/visualization.css">
+</head>
+
+<style>
+body {
+  background-image: url('static/images/img3.jpeg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+/* table {
+    border-collapse: collapse;
+    width: 50%;
+    margin: 20px auto;
+}
+
+th, td {
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 8px;
+} */
+</style> 
+
+
+<div> 
+    <img src="static/images/nohara_logo3.jpg", class= 'logo'> 
+</div> 
+<div class="title">Segmentation</div> 
+<div> 
+    <img src="static/images/segment_plot_3d.png", class= 'clsFirstImg'></div> 
+<div> 
+
+<!-- <a href="/download_point_cloud" download="point_cloud_data.csv">
+    <button class="download-btn">Download Below colorful Point Cloud Data</button>
+</a> -->
+
+<form id="downloadpcd" action="{{ url_for('download_point_cloud') }}" method="GET">
+    <h3>Download Below Selected Segments</h3>
+    <label>
+        <input type="radio" name="file_format" value="txt">TXT
+    </label>
+    <label>
+        <input type="radio" name="file_format" value="ply">PLY
+    </label>
+    <button id="download-btn" type="submit">Download</button>
+</form>
+
+<form id="exportXL" action="{{ url_for('export_excel') }}" method="GET">
+    <h3>Area Calculation</h3>
+    <button id="excel-btn" type="submit">Download</button>
+</form>
+
+<body>
+    <form id="myForm">
+        <h2>Visualize color segment</h2>
+        <h3>Choose segments:</h3>
+        <!-- <h3 for="selected_option">Choose segments:</h3> -->
+
+        <table>
+            <!-- Add a row for "Select All" -->
+            <tr>
+                <td><input type="checkbox" id="selectAll" onchange="toggleAllCheckboxes()"></td>
+                <td>Select All</td>
+            </tr>
+
+            {% for i in range(options|length) %}
+                {% if i % 4 == 0 %}
+                    </tr><tr>
+                {% endif %}
+                <td><input type="checkbox" name="selected_option" value="{{ options[i] }}"></td>
+                <td>{{ options[i] }}</td>
+            {% endfor %}
+            </tr>
+        </table>
+        <br>
+
+        <input id="visualizeButton12" type="button" value="3D PointCloud/点群" onclick="submitForm()" title="Please wait for a while it may take few minutes to visualize 3D point cloud data...">
+    
+    
+    </form>
+    
+    <!-- <textarea id="result" rows="4" cols="50"  placeholder="After selecting segment, Please wait for a while it may take few minutes to visualize 3D point cloud data..."></textarea> -->
+    <script>
+
+        function toggleAllCheckboxes() {
+            // Get the "Select All" checkbox
+            var selectAllCheckbox = document.getElementById("selectAll");
+
+            // Get all checkboxes with the name "selected_colors"
+            var checkboxes = document.querySelectorAll('input[name="selected_option"]');
+
+            // Set the state of all checkboxes based on the "Select All" checkbox
+            checkboxes.forEach(function(checkbox) {
+                checkbox.checked = selectAllCheckbox.checked;
+            });
+        }
+
+        function submitForm() {
+            // Get all selected checkboxes
+            var selectedOptions = document.querySelectorAll('input[name="selected_option"]:checked');
+
+            // Create an array to store the selected color values
+            var selectedColors = Array.from(selectedOptions).map(function(checkbox) {
+                return checkbox.value;
+            });
+            
+
+            // Send the selected color values to the server using AJAX
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/result", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    // // Get the response from the server
+                    // var response = JSON.parse(xhr.responseText);
+
+                    // // Update the textarea with the print_string
+                    // var printString = response.print_string;
+                    // document.getElementById("result").textContent = printString;
+
+                    // Call the visualize function
+                    callVisualize();
+                }
+            };
+
+            // Convert the array of selected color values to JSON before sending
+            var jsonData = JSON.stringify({ selected_option: selectedColors });
+            xhr.send(jsonData);
+            }
+
+        function callVisualize() {
+        // Send a GET request to /visualize1/ to call the visualize1() function
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "/visualize1/", true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                // Get the response from the server (optional)
+                var response = JSON.parse(xhr.responseText);
+                console.log(response); // You can log the response if needed
+            }
+        };
+        xhr.send();
+    }
+    </script>
+</body>
+
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#visualizeButton2").click(function() {
+                $.ajax({
+                    type: "GET",
+                    url: "/visualize2",
+                });
+            });
+        });
+    </script>
+  </head>
+  <body>
+    <div class="container2">
+      <!-- <h2>Visualize Segmentation</h2> -->
+      <!-- <h3>セグメンテーション</h3> -->
+      <h3>Visualize the Corners</h3>
+      <button id="visualizeButton2">3D</button>
+  </div>
+  </body>
+
+
+  
