@@ -1,0 +1,164 @@
+.logo{
+  width:  20%;
+  position:  absolute;
+  top: 0;
+  right: 0;
+  background-color: transparent;
+  border-radius: 25px;
+}
+
+.title {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size:60px;
+  font-stretch: expanded;
+  text-align: center;
+  color: #000000;
+  text-shadow:
+    0 0 5px #fff,
+    0 0 10px #fff,
+    0 0 20px #fff,
+    0 0 40px #fff,
+    0 0 80px #fff,
+    0 0 90px #fff,
+    0 0 100px #fff,
+    0 0 150px #fff;
+}
+
+
+.clsFirstIMg{
+  width:  30%;
+  height: 80%;
+  position:  absolute;
+  top: 16%;
+  left: 6%;
+  background-color: transparent;
+}
+
+#downloadpcd{
+  text-align: center;
+  position: absolute;
+  /* width: 17%;
+  top: 16%;
+  left: 77%; */
+  width: 17%;
+  top: 30%;
+  left: 67%;
+  background-color: #96eff3;
+  border-radius: 20px;
+}
+[id="download-btn"] {
+  font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+  width: 40%;
+  background:rgb(165, 187, 0);
+  border-radius:10px;
+  font-size:100%;
+  cursor:pointer;
+}
+
+#exportXL{
+  text-align: center;
+  position: absolute;
+  width: 17%;
+  top: 16%;
+  left: 59%;
+  background-color: #96eff3;
+  border-radius: 20px;
+}
+[id="excel-btn"] {
+  font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+  width: 40%;
+  background:rgb(165, 187, 0);
+  border-radius:10px;
+  font-size:100%;
+  cursor:pointer;
+}
+
+#myForm{
+  text-align: center;
+  position: absolute;
+  width: 28%;
+  /* height: 20%; */
+  top: 44%;
+  left: 61%;
+  /* padding: 15px; */
+  /* background-color: #96eff3; */
+  border-radius: 20px;
+}
+[id="visualizeButton12"] {
+  font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+  width: 80%;
+  background:rgb(228, 151, 118);
+  border-radius:10px;
+  font-size:18px;
+  cursor:pointer;
+}
+select {
+  font-size: 18px;
+  background-color: #f0f0f0;
+  /* Add any other styling properties here */
+}
+h2 {
+  color: black;
+  text-shadow:
+    0 0 5px #fff,
+    0 0 10px #fff,
+    0 0 20px #fff,
+    0 0 40px #fff,
+    0 0 80px #fff,
+    0 0 90px #fff,
+    0 0 100px #fff,
+    0 0 150px #fff;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 20px auto;
+  background-color: #f2f2f2;
+}
+th, td {
+  border: 1px solid #0e0e0e;
+  text-align: center;
+  padding: 8px;
+}
+
+#result {
+  border: 2px solid black;
+  background-color: #f0f0f0;
+  width:  30%;
+  height: 20%;
+  position:  absolute;
+  top: 16%;
+  left: 61%;
+  font-size: 20px;
+}
+
+
+.container2{
+  text-align: center;
+  position: absolute;
+  width: 17%;
+  top: 16%;
+  left: 77%;
+  /* padding: 5px; */
+  background-color: #96eff3;
+  border-radius: 20px;
+}
+[id="visualizeButton2"] {
+  font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+  width: 40%;
+  background:rgb(228, 151, 118);
+  border-radius:10px;
+  font-size:100%;
+  cursor:pointer;
+}
+/* .container2 h3 {
+  position: absolute;
+  top: 30%;
+  left: 22%;
+  font-size: 15px;
+} */
+
+
