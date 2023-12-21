@@ -66,4 +66,4 @@ jobs:
         with:
           app-name: 'SegmentationPCDApp'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_795D5C59F12F4A858CD7B301B7FF6E87 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_F9EE3A9B42AB48B68537939B9590C4E8 }}
