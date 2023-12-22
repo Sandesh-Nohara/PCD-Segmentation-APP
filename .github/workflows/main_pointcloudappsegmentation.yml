@@ -66,4 +66,4 @@ jobs:
         with:
           app-name: 'pointCloudAppSegmentation'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_3A4D049912A54D468AD4123827172725 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_F67398625C42475F854895C9E22072EB }}
