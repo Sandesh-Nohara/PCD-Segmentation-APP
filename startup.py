@@ -300,11 +300,11 @@ def visualize2():
 #    return render_template('visualization.html')
 
 
-if __name__ == '__main__':  
-   app.run(host='0.0.0.0', port=8080)  
-      
 # if __name__ == '__main__':  
-#   app.run(debug = True)
+#    app.run(host='0.0.0.0', port=8080)  
+      
+if __name__ == '__main__':  
+  app.run()#debug = True)
 
 # AWS : https://www.youtube.com/watch?v=_rwNTY5Mn40
 # sudo apt-get update && sudo apt-get install pip
