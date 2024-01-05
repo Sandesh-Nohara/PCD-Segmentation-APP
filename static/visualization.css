@@ -40,12 +40,12 @@
 #downloadpcd{
   text-align: center;
   position: absolute;
-  /* width: 17%;
-  top: 16%;
-  left: 77%; */
   width: 17%;
+  top: 16%;
+  left: 80%;
+  /* width: 17%;
   top: 30%;
-  left: 67%;
+  left: 67%; */
   background-color: #96eff3;
   border-radius: 20px;
 }
@@ -63,7 +63,7 @@
   position: absolute;
   width: 17%;
   top: 16%;
-  left: 59%;
+  left: 62%;
   background-color: #96eff3;
   border-radius: 20px;
 }
@@ -81,8 +81,8 @@
   position: absolute;
   width: 28%;
   /* height: 20%; */
-  top: 44%;
-  left: 61%;
+  top: 29%;
+  left: 47%;
   /* padding: 15px; */
   /* background-color: #96eff3; */
   border-radius: 20px;
@@ -113,6 +113,7 @@ h2 {
     0 0 150px #fff;
 }
 table {
+  position: center;
   border-collapse: collapse;
   width: 100%;
   margin: 20px auto;
@@ -141,7 +142,7 @@ th, td {
   position: absolute;
   width: 17%;
   top: 16%;
-  left: 77%;
+  left: 44%;
   /* padding: 5px; */
   background-color: #96eff3;
   border-radius: 20px;
