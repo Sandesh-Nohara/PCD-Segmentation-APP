@@ -13,9 +13,9 @@ import open3d as o3d
 # from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import LocalOutlierFactor
 
-import torch
-from torch_geometric.loader import DataLoader
-from torch_geometric.data import Data
+# import torch
+# from torch_geometric.loader import DataLoader
+# from torch_geometric.data import Data
 from sklearn.neighbors import radius_neighbors_graph
 from utils import part_seg2, normalize_tensor
 
@@ -118,72 +118,72 @@ def ransac(xyz, threshold, iterations=70000):
 
     return inliers, outliers
 
-def find_node(xyz, method="knn"):
+# def find_node(xyz, method="knn"):
     
-    # Step 1: Point Cloud to Mesh
-    pcd_raw = o3d.geometry.PointCloud()
-    pcd_raw.points = o3d.utility.Vector3dVector(xyz)
-    pcd_raw.estimate_normals()
+#     # Step 1: Point Cloud to Mesh
+#     pcd_raw = o3d.geometry.PointCloud()
+#     pcd_raw.points = o3d.utility.Vector3dVector(xyz)
+#     pcd_raw.estimate_normals()
 
-    #radius determination
-    distances = pcd_raw.compute_nearest_neighbor_distance()
-    avg_dist = np.mean(distances)
-    factor = 1
-    if method=="knn":
-        arr = np.asarray(pcd_raw.points)
-        A_sparse = radius_neighbors_graph(arr, avg_dist*factor, mode='connectivity', include_self=False)
-        e1 = A_sparse.nonzero()[0].reshape(-1, 1)
-        e2 = A_sparse.nonzero()[1].reshape(-1, 1)
-        edges = np.concatenate((e1, e2), axis=1)
+#     #radius determination
+#     distances = pcd_raw.compute_nearest_neighbor_distance()
+#     avg_dist = np.mean(distances)
+#     factor = 1
+#     if method=="knn":
+#         arr = np.asarray(pcd_raw.points)
+#         A_sparse = radius_neighbors_graph(arr, avg_dist*factor, mode='connectivity', include_self=False)
+#         e1 = A_sparse.nonzero()[0].reshape(-1, 1)
+#         e2 = A_sparse.nonzero()[1].reshape(-1, 1)
+#         edges = np.concatenate((e1, e2), axis=1)
         
-    arr = np.hstack((np.asarray(pcd_raw.points), np.asarray(pcd_raw.normals)))
-    nodes = torch.tensor(arr, dtype=torch.float32)
-    edge_index = torch.tensor(edges, dtype=torch.long).t().contiguous()
+#     arr = np.hstack((np.asarray(pcd_raw.points), np.asarray(pcd_raw.normals)))
+#     nodes = torch.tensor(arr, dtype=torch.float32)
+#     edge_index = torch.tensor(edges, dtype=torch.long).t().contiguous()
       
-    data1 = Data(x=nodes, edge_index=edge_index)
+#     data1 = Data(x=nodes, edge_index=edge_index)
 
-    return data1
+#     return data1
 
-def predict_GCN(pcd, req_label, sequence_length, batch_size, torch_model, device, shuffle_data = True):
-    n = len(pcd)
-    xyz = normalize_tensor(pcd[:, :3])  # normalize the data
-    if shuffle_data:
-        randomize = np.arange(n)
-        np.random.shuffle(randomize)
-        pcd = pcd[randomize]
-        xyz = xyz[randomize]
+# def predict_GCN(pcd, req_label, sequence_length, batch_size, torch_model, device, shuffle_data = True):
+#     n = len(pcd)
+#     xyz = normalize_tensor(pcd[:, :3])  # normalize the data
+#     if shuffle_data:
+#         randomize = np.arange(n)
+#         np.random.shuffle(randomize)
+#         pcd = pcd[randomize]
+#         xyz = xyz[randomize]
     
-    Tbatch = n // (batch_size*sequence_length)
-    xyz1 = xyz[: Tbatch * batch_size * sequence_length]
+#     Tbatch = n // (batch_size*sequence_length)
+#     xyz1 = xyz[: Tbatch * batch_size * sequence_length]
 
-    split_xyz1 = np.split(xyz1, Tbatch)
-    train_list = []
-    for i in range(Tbatch):
-        xyz11 = split_xyz1[i]
-        data1 = find_node(xyz11[:, :3], method="knn")
-        train_list.append(data1)
+#     split_xyz1 = np.split(xyz1, Tbatch)
+#     train_list = []
+#     for i in range(Tbatch):
+#         xyz11 = split_xyz1[i]
+#         data1 = find_node(xyz11[:, :3], method="knn")
+#         train_list.append(data1)
 
-    data_loader =  DataLoader(train_list, batch_size=1, shuffle=False)
+#     data_loader =  DataLoader(train_list, batch_size=1, shuffle=False)
 
-    pred_label = []
-    for pred_data in data_loader:
-        pred_data.to(device)
+#     pred_label = []
+#     for pred_data in data_loader:
+#         pred_data.to(device)
         
-        predicted_labels = torch_model(pred_data.x, pred_data.edge_index)
-        predicted_labels = torch.argmax(predicted_labels, dim=1, keepdim=True)
-        pred_label.append(predicted_labels.detach().cpu().numpy())
+#         predicted_labels = torch_model(pred_data.x, pred_data.edge_index)
+#         predicted_labels = torch.argmax(predicted_labels, dim=1, keepdim=True)
+#         pred_label.append(predicted_labels.detach().cpu().numpy())
 
-    pred_label = np.concatenate(pred_label)
-    sequence = pcd[: Tbatch * batch_size * sequence_length]
-    rem_sequence = pcd[Tbatch * batch_size * sequence_length: ]
+#     pred_label = np.concatenate(pred_label)
+#     sequence = pcd[: Tbatch * batch_size * sequence_length]
+#     rem_sequence = pcd[Tbatch * batch_size * sequence_length: ]
 
-    new_xyz = sequence[np.where(pred_label == req_label)[0]]
-    no_new_xyz = sequence[np.where(pred_label != req_label)[0]]
-    if len(no_new_xyz) > 0:
-        if len(rem_sequence) > 0:
-            no_new_xyz = np.vstack((no_new_xyz, rem_sequence))
+#     new_xyz = sequence[np.where(pred_label == req_label)[0]]
+#     no_new_xyz = sequence[np.where(pred_label != req_label)[0]]
+#     if len(no_new_xyz) > 0:
+#         if len(rem_sequence) > 0:
+#             no_new_xyz = np.vstack((no_new_xyz, rem_sequence))
 
-    return new_xyz, no_new_xyz
+#     return new_xyz, no_new_xyz
 
 
 def normal_split(pcd_raw, xyz, threshold):
@@ -273,7 +273,7 @@ def read_pcd_file(filepath, downsample=True):
 def main1(pcd_raw, xyz, threshold_org):
 
     sequence_length = 1024
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    # device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     # device = torch.device("cpu")
 
     model_name = "gcn"
@@ -286,12 +286,12 @@ def main1(pcd_raw, xyz, threshold_org):
     #     torch_model = part_seg2(6, 3)
         
     batch_size = 32
-    torch_model = part_seg2(6, 3)
-    model_path = f"{model_name}_Checkpoint.pt"
-    checkpoint = torch.load(model_path)
-    torch_model.load_state_dict(checkpoint['state_dict'])
-    torch_model.to(device)
-    torch_model.eval()
+    # torch_model = part_seg2(6, 3)
+    # model_path = f"{model_name}_Checkpoint.pt"
+    # checkpoint = torch.load(model_path)
+    # torch_model.load_state_dict(checkpoint['state_dict'])
+    # torch_model.to(device)
+    # torch_model.eval()
 
 
     interval_points = normal_split(pcd_raw, xyz, threshold_org*12)
@@ -316,8 +316,8 @@ def main1(pcd_raw, xyz, threshold_org):
 
                 if len(inlier2) > batch_size*sequence_length:
                     # perform GNN
-                    if num == 2:
-                        inlier, outlier = predict_GCN(inlier2, req_label, sequence_length, batch_size, torch_model, device, shuffle_data = True)
+                    if num == 4:
+                        # inlier, outlier = predict_GCN(inlier2, req_label, sequence_length, batch_size, torch_model, device, shuffle_data = True)
                         # inlier, outlier = outlier_removal(inlier1, 100, threshold_org)
                         
                         if len(inlier) > int(len(inlier2) * (2/3)):
